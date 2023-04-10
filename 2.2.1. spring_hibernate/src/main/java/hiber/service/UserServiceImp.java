@@ -15,6 +15,11 @@ public class UserServiceImp implements UserService {
    private UserDao userDao;
 
    @Transactional
+   public User saveUser(){
+      return userDao.saveUser();
+   }
+
+   @Transactional
    @Override
    public void add(User user) {
       userDao.add(user);
