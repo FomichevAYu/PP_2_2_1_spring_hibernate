@@ -47,6 +47,18 @@ public class MainApp {
          System.out.println();
       }
 
+      List<User> users3 = userService.listUsers1("model3", 3);
+      System.out.println(users3.size());
+      for (User user : users3) {
+         System.out.println("Id = "+user.getId());
+         System.out.println("First Name = "+user.getFirstName());
+         System.out.println("Last Name = "+user.getLastName());
+         System.out.println("Email = "+user.getEmail());
+         System.out.println("Model car = "+user.getCar().getModel());
+         System.out.println("Series car = "+user.getCar().getSeries());
+         System.out.println();
+      }
+
 
       context.close();
    }
