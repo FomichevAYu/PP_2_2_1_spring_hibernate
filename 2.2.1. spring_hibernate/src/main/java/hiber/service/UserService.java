@@ -9,7 +9,7 @@ public interface UserService {
 
     void add(User user, Car car);
     List<User> listUsers();
-    List<User> listUsers1(String model, int series);
+    List<User> listUsers(String model, int series);
 
 
 }

@@ -16,6 +16,7 @@ public class MainApp {
             new AnnotationConfigApplicationContext(AppConfig.class);
 
       UserService userService = context.getBean(UserService.class);
+      //создаю пользователей и машины
       Car car1 = new Car("model1", 1);
       User user1 = new User("User1", "Lastname1", "mail1@mail.ru");
       Car car2 = new Car("model2", 2);
@@ -25,7 +26,7 @@ public class MainApp {
       Car car4 = new Car("model4", 4);
       User user4 = new User("User4", "Lastname4", "mail4@mail.ru");
 
-
+      //добавляю машины в юзеры, добавляю объекты в БД
       car1.setUser(user1);
       userService.add(user1, car1);
       car2.setUser(user2);
@@ -34,7 +35,7 @@ public class MainApp {
       userService.add(user3, car3);
       car4.setUser(user4);
       userService.add(user4, car4);
-
+      //Проучаю список всех пользователей
       List<User> users = userService.listUsers();
       System.out.println(users.size());
       for (User user : users) {
@@ -46,8 +47,8 @@ public class MainApp {
          System.out.println("Series car = "+user.getCar().getSeries());
          System.out.println();
       }
-
-      List<User> users3 = userService.listUsers1("model3", 3);
+      //Получаю список ползователей используя критерии 
+      List<User> users3 = userService.listUsers("model3", 3);
       System.out.println(users3.size());
       for (User user : users3) {
          System.out.println("Id = "+user.getId());
