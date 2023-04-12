@@ -4,7 +4,6 @@ import hiber.config.AppConfig;
 import hiber.model.Car;
 import hiber.model.User;
 import hiber.service.UserService;
-import org.hibernate.Session;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
@@ -16,27 +15,37 @@ public class MainApp {
             new AnnotationConfigApplicationContext(AppConfig.class);
 
       UserService userService = context.getBean(UserService.class);
-      //создаю пользователей и машины
-      Car car1 = new Car("model1", 1);
-      User user1 = new User("User1", "Lastname1", "mail1@mail.ru");
-      Car car2 = new Car("model2", 2);
-      User user2 = new User("User2", "Lastname2", "mail2@mail.ru");
-      Car car3 = new Car("model3", 3);
-      User user3 = new User("User3", "Lastname3", "mail3@mail.ru");
-      Car car4 = new Car("model4", 4);
-      User user4 = new User("User4", "Lastname4", "mail4@mail.ru");
+      //Добавил bean-зависимости через setter класса User, теперь объект Car создается автоматически
+      User user1 = (User)context.getBean("user");
+      //Поля заполняются через сеттеры
+      user1.setFirstName("name1");
+      user1.setLastName("lastname1");
+      user1.setEmail("mail@mail.ru");
+      user1.getCar().setUser(user1);
+      user1.getCar().setModel("model1");
+      user1.getCar().setSeries(1);
+      userService.add(user1);
 
-      //добавляю машины в юзеры, добавляю объекты в БД
-      car1.setUser(user1);
-      userService.add(user1, car1);
-      car2.setUser(user2);
-      userService.add(user2, car2);
-      car3.setUser(user3);
-      userService.add(user3, car3);
-      car4.setUser(user4);
-      userService.add(user4, car4);
-      //Проучаю список всех пользователей
-      List<User> users = userService.listUsers();
+      User user2 = (User)context.getBean("user");
+      user2.setFirstName("name2");
+      user2.setLastName("lastname2");
+      user2.setEmail("mail@mail.ru");
+      user2.getCar().setUser(user2);
+      user2.getCar().setModel("model2");
+      user2.getCar().setSeries(2);
+      userService.add(user2);
+
+      User user3 = (User)context.getBean("user");
+      user3.setFirstName("name3");
+      user3.setLastName("lastname3");
+      user3.setEmail("mail@mail.ru");
+      user3.getCar().setUser(user3);
+      user3.getCar().setModel("model3");
+      user3.getCar().setSeries(3);
+      userService.add(user3);
+
+      //переименовал метод в getListUsers, такое название более очевидное
+      List<User> users = userService.getListUsers();
       System.out.println(users.size());
       for (User user : users) {
          System.out.println("Id = "+user.getId());
@@ -47,8 +56,8 @@ public class MainApp {
          System.out.println("Series car = "+user.getCar().getSeries());
          System.out.println();
       }
-      //Получаю список ползователей используя критерии 
-      List<User> users3 = userService.listUsers("model3", 3);
+
+      List<User> users3 = userService.getListUsers("model1", 1);
       System.out.println(users3.size());
       for (User user : users3) {
          System.out.println("Id = "+user.getId());

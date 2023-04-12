@@ -3,10 +3,7 @@ package hiber.config;
 import hiber.model.Car;
 import hiber.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -49,7 +46,18 @@ public class AppConfig {
       factoryBean.setAnnotatedClasses(User.class, Car.class);
       return factoryBean;
    }
+   @Bean
+   @Scope("prototype")
+   public Car car(){
+      return new Car();
+   }
 
+   @Bean(name = "user")
+   @Scope("prototype")
+   public User user(){
+      User user = new User();
+      return user;
+   }
    @Bean
    public HibernateTransactionManager getTransactionManager() {
       HibernateTransactionManager transactionManager = new HibernateTransactionManager();
