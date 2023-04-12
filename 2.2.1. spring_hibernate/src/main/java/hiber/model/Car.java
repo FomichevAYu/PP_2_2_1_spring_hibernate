@@ -1,16 +1,10 @@
 package hiber.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "car")
-@Component
 public class Car {
 
 
@@ -27,6 +21,12 @@ public class Car {
     private User user;
 
     public Car() {
+    }
+
+    public Car(String model, int series, User user) {
+        this.model = model;
+        this.series = series;
+        this.user = user;
     }
 
     public Long getId() {

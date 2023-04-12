@@ -8,7 +8,9 @@ import java.util.List;
 public interface UserService {
 
     void add(User user);
+
     List<User> getListUsers();
+
     List<User> getListUsers(String model, int series);
 
 
